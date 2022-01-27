@@ -210,7 +210,7 @@ int GetHMTime(char *pOut)
 	return 0;
 }
 
-/* 1: ¿ù¿äÀÏ ~ */
+/* 1: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ~ */
 int GetNumDay(char *inday)
 {
 	char        tmp[10];
@@ -292,79 +292,6 @@ int ReadLine(int nFd, char *pOut)
 	return nPos;
 }
 
-#ifdef SFDASDFASFASFDASDFASFDAASDFFASASDFSDASFSDSDDSFASDFFASD
-int Log(const char *pName, int line, const char *fmt, ...)
-{
-	int	fd;
-	int	len;
-	va_list	ap;
-	struct timeval  t;
-	struct tm       *tm;
-	char	str[4096 * 10];
-	char    path[100];
-	char    logdt[10];
-
-	memset(path, '\0', sizeof(path));
-
-	/* YYYYMMDDhhmmss PID Grade */
-	gettimeofday(&t, NULL);
-	tm = localtime(&t.tv_sec);
-
-	sprintf(logdt, "%02d%02d", tm->tm_mon+1, tm->tm_mday);
-	sprintf(path, "%s_%s", pName, logdt);
-
-/*******
-	len = sprintf(str, "[%02d%02d %02d%02d%02d %06d](%04d) ",
-		tm->tm_mon+1, tm->tm_mday,
-		tm->tm_hour, tm->tm_min, tm->tm_sec, t.tv_usec, line);
-*******/
-
-	len = sprintf(str, "[%02d:%02d:%02d.%03d](%04d) ",
-		tm->tm_hour, tm->tm_min, tm->tm_sec, t.tv_usec/1000, line);
-
-	va_start(ap, fmt);
-	len = vsprintf(str+len, fmt, ap) + len;
-	va_end(ap);
-
-	fd = open(path, O_WRONLY|O_CREAT|O_APPEND, 0666);
-	if(fd >= 0)
-	{ 
-		write(fd, str, len);
-		close(fd);
-	}
-
-	return 0;
-}
-#endif
-
-#ifdef SFDASDFASFASFDASDFASFDAASDFFASASDFSDASFSDSDDSFASDFFASD
-/*   <--- 2021.08.04 appended.
-=========================== Error File Information ==============================
-Error File Name >
-        /JOBLOG/SMS/error_log ( µð·ºÅä¸® ¹× ÆÄÀÏÀº Á¤ÇÏ¼¼¿ä... )
-Format >
-
-        Date|Time|hostname|Biz_Group|Proc_name|Status|Msg_id|message|@END
-
-        Data  ==>  yyyymmdd
-        Time  ==>  hh:mm:ss.99
-        Hostname ==> {rsum365p|rsum365s}
-        Biz_Group ==> {AC|BK..|COM|HIQ..}
-        Proc_name ==> Process name
-        Status ==> ERR
-        Msg_id ==> 99999
-        Message ==> 50 Bytes ÀÌ³»   (ÈÞ´ëÆù Àü¼Û TEXT)
-        suffix ==> @END
-
-
-Example)
-20091016|09:00:30|rssm_fep_dev|FEP|ÇÁ·Î¼¼½ºNAME|ERR|00000|[¼º°ø] GL CONNECTION ½ÇÆÐÀÔ´Ï´Ù|@END
-
-=> Status  "ERR" ÀÎ °æ¿ì¸¸ SMS·Î Àü¼Û µÊ.  ¿î¿µÀÚ ¾Ë¾Æ¾ßÇÒ Á¤º¸¼º ¸Þ½ÃÁö "INF" ·Î ÇÏ¸é µË´Ï´Ù.   
-
-ÀÌ·± ¿¹·Î error_log ÆÄÀÏ¿¡ write ÇÏ½Ã¸é µË´Ï´Ù.. */
-*/
-#endif
 
 int SMSLog(char *prcenm, char *errtp, char *errcd, char *errmsg)
 {
@@ -388,7 +315,7 @@ int SMSLog(char *prcenm, char *errtp, char *errcd, char *errmsg)
 	gethostname(hostnm, sizeof(hostnm));
 
 	/**
-	20091016|09:00:30|rssm_fep_dev|FEP|ÇÁ·Î¼¼½ºNAME|ERR|00000|[¼º°ø] GL CONNECTION ½ÇÆÐÀÔ´Ï´Ù|@END
+	20091016|09:00:30|rssm_fep_dev|FEP|ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½NAME|ERR|00000|[ï¿½ï¿½ï¿½ï¿½] GL CONNECTION ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½|@END
 	***/
 
 	memset(smsbuf, '\0', sizeof(smsbuf));
