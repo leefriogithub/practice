@@ -1205,6 +1205,31 @@ int SetLineStat(const char *fname, int stat)
 	return n;
 }
 
+// 2022.01.28 modify.
+int SetLineStat2(const char *fname, int stat)
+{
+	int     n;
+	int     fd;
+	char	str[20];
+
+	if((fd = open(fname, O_RDWR)) <  0)
+		return -1;
+
+	memset(str, '\0', sizeof(str));
+
+	sprintf(str, "%d",stat);	
+	n = write(fd, str, strlen(str));
+	if(n <= 0)
+	{
+		close(fd);
+		return -2;
+	}
+
+	close(fd);
+
+	return n;
+}
+
 /******************************************************************************/
 /*                            End of File                                     */
 /******************************************************************************/
